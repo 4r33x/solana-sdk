@@ -3454,6 +3454,7 @@ dependencies = [
  "solana-instruction",
  "solana-instruction-error",
  "solana-pubkey",
+ "wincode",
 ]
 
 [[package]]
@@ -4349,6 +4350,7 @@ dependencies = [
  "solana-frozen-abi-macro",
  "solana-instruction-error",
  "solana-sanitize",
+ "wincode",
 ]
 
 [[package]]

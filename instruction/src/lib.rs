@@ -90,6 +90,7 @@ pub mod syscalls;
     feature = "serde",
     derive(serde_derive::Serialize, serde_derive::Deserialize)
 )]
+#[cfg_attr(feature = "wincode", derive(wincode::SchemaRead, wincode::SchemaWrite))]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Instruction {
     /// Pubkey of the program that executes this instruction.
@@ -205,6 +206,20 @@ impl Instruction {
         accounts: Vec<AccountMeta>,
     ) -> Self {
         let data = bincode::serialize(data).unwrap();
+        Self {
+            program_id,
+            accounts,
+            data,
+        }
+    }
+
+    #[cfg(feature = "wincode")]
+    pub fn new_with_wincode<T: wincode::SchemaWrite>(
+        program_id: Pubkey,
+        data: &T,
+        accounts: Vec<AccountMeta>,
+    ) -> Self {
+        let data = wincode::serialize(data).unwrap();
         Self {
             program_id,
             accounts,
